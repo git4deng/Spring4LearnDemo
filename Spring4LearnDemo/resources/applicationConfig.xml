@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--配置bean-->
+	<!--在启动容器的时候，spring调用该类的无参构造器创建对象，并调用该对象的set方法初始化属性-->
+	<!--
+		class:bean的全类名，通过反射的方式在IOC容器中创建Bean,所以要求bean中必须有无参构造器
+		id:标识容器中的bean，id唯一
+	-->
+	<!--1.通过set方法初始化属性-->
+	<bean id="helloWorld" class="com.david.spring4.helloworld.beans.HelloWorld">
+		<property name="name" value="DAVID"></property>
+	</bean>
+	<!--2.通过构造器的方式初始化属性-->
+	<!--2.1指定构造器的参数顺序的方式-->
+	<bean id="car1" class="com.david.spring4.helloworld.beans.Car">
+		<constructor-arg value="大众" index="0"></constructor-arg>
+		<constructor-arg value="奥迪" index="1"></constructor-arg>
+		<constructor-arg value="240" index="2"></constructor-arg>
+	</bean>
+	<!--2.2指定构造器的参数类型的方式-->
+	<bean id="car2" class="com.david.spring4.helloworld.beans.Car">
+		<constructor-arg value="大众" type="java.lang.String"></constructor-arg>
+		<constructor-arg value="奥迪" type="java.lang.String"></constructor-arg>
+		<constructor-arg value="200000.00" type="float"></constructor-arg>
+	</bean>
+	<bean id="car3" class="com.david.spring4.helloworld.beans.Car">
+		<!--字面值可以使用 value标签设置，如果包含特殊字符使用  <![CDATA[]]>包裹起来-->
+		<constructor-arg  type="java.lang.String">
+			<value><![CDATA[<NULL/>]]></value>
+		</constructor-arg>
+		<constructor-arg value="奥迪" type="java.lang.String"></constructor-arg>
+		<constructor-arg value="200000.00" type="float"></constructor-arg>
+	</bean>
+	<!--引用其它bean的方式-->
+	<bean id="person" class="com.david.spring4.helloworld.beans.Person">
+		<property name="name" value="David"></property>
+		<property name="age" value="25"></property>
+		<!--可以使用property的ref属性建立bean之间的引用关系-->
+		<property name="car" ref="car2"></property>
+	</bean>
+	<bean id="person2" class="com.david.spring4.helloworld.beans.Person">
+		<property name="name" value="David"></property>
+		<property name="age" value="25"></property>
+		<!--可以使用property的ref子节点建立bean之间的引用关系-->
+		<property name="car" >
+			<ref bean="car2"/>
+		</property>
+	</bean>
+	
+	<!--使用内部bean的方式-->
+	<bean id="person3" class="com.david.spring4.helloworld.beans.Person">
+		<property name="name" value="David"></property>
+		<property name="age" value="25"></property>
+		<!--可以使用内部bean建立bean之间的引用关系-->
+		<property name="car">
+			<!--注意：此内部bean不能被外部使用，只能在内部使用，所以没必要配置id了-->
+			<bean class="com.david.spring4.helloworld.beans.Car">
+				<constructor-arg value="大众"></constructor-arg>
+				<constructor-arg value="benz"></constructor-arg>
+				<constructor-arg value="500000.0"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<!--构造器引用外部bean的方式-->
+	<bean id="person4" class="com.david.spring4.helloworld.beans.Person">
+		<constructor-arg value="张三"></constructor-arg>
+		<constructor-arg value="20"></constructor-arg>
+		<constructor-arg ref="car2"></constructor-arg>
+	</bean>
+	<!--构造器引用内部bean的方式-->
+	<bean id="person5" class="com.david.spring4.helloworld.beans.Person">
+		<constructor-arg value="李四"></constructor-arg>
+		<constructor-arg value="22"></constructor-arg>
+		<constructor-arg>
+			<bean class="com.david.spring4.helloworld.beans.Car">
+				<constructor-arg value="大众"></constructor-arg>
+				<constructor-arg value="benz"></constructor-arg>
+				<constructor-arg value="500000.0"></constructor-arg>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	
+	
+</beans>
