@@ -24,5 +24,7 @@ public class Car {
 	public String toString() {
 		return "Car [company=" + company + ", brand=" + brand + ", maxSpeed=" + maxSpeed + ", price=" + price + "]";
 	}
-
+	public void setMaxSpeed(int maxSpeed) {
+		this.maxSpeed = maxSpeed;
+	}
 }

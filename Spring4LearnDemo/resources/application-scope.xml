@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!--
+		scope默认是"singleton"单例的，即默认情况下该id引用的对象在容器生命周期内只存在一个，且这个bean是在容器创建的时候就创建好了
+		也可以配置成"prototype"，非单例，即每次从容器中获取该对象，容器都会创建一个新的对象，在创建容器的时候不会创建bean
+		
+	-->
+	<bean id="car" class="com.david.spring4.helloworld.beans.autowire.Car"
+		p:brand="大众" p:price="200000" scope="prototype"></bean>
+
+</beans>

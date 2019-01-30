@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="address" class="com.david.spring4.helloworld.beans.autowire.Address" 
+		p:city="ChengDu" p:street="ChunXiRoad"></bean>
+	<bean id="car" class="com.david.spring4.helloworld.beans.autowire.Car"
+		p:brand="帝豪" p:price="100000"></bean>
+	<!--手动指定属性的方式-->
+	<bean id="p1" class="com.david.spring4.helloworld.beans.autowire.Person" 
+		p:name="David" p:address-ref="address" p:car-ref="car"></bean>
+	<!--自动装备byName的方式-->
+	<!--  
+		可以使用autowire属性指定自动装配的方式，byName根据bean的名字和当前bean的setter风格的属性命进行自动装配
+		若有匹配的，则进行自动装配，若没有匹配的，则不装配
+	-->
+	<bean id="p2" class="com.david.spring4.helloworld.beans.autowire.Person" 
+		p:name="David" autowire="byName"></bean>
+	<!--
+		byType:根据bean的类型和当前bean的属性的类型进行自动装配,注意IOC中存在多个以上的类型相同的bean，因不知道装配哪一个而抛出异常
+	-->
+	<!-- <bean id="p3" class="com.david.spring4.helloworld.beans.autowire.Person" 
+		p:name="David" autowire="byType"></bean> -->
+
+</beans>

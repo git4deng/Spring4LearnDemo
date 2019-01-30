@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="address1" class="com.david.spring4.helloworld.beans.autowire.Address" 
+		p:city="ChengDu" p:street="ChunXiRoad"></bean>
+	<!--父 Bean 可以作为配置模板, 也可以作为 Bean 实例. 若只想把父 Bean 作为模板, 
+		可以设置 <bean> 的abstract 属性为 true, 这样 Spring 将不会实例化这个 Bean。
+		若一个bean的class属性没有被指定，那么这个bean必须是一个抽象bean
+	-->
+	<bean id="address2" 
+		p:city="ChengDu" p:street="YuLinStreet" abstract="true"></bean>
+	<!--bean的继承，使用bean的parent属性指定继承哪个bean的配置-->
+	<!--子bean属性将会覆盖父bena的street属性  -->
+	<bean id="address3"  p:street="TianFuStreet" parent="address1"></bean>
+	
+	<bean id="car-r" class="com.david.spring4.helloworld.beans.autowire.Car"
+		p:brand="吉利" p:price="200000"
+	></bean>
+	<!--
+		注意：此处依赖car-r这个bean,是实例化p-r这个bean之前必须car-r这个bean先存在了，且配置依赖关系并不会
+		将依赖的这个bean用来实例化person中car这个属性，另外可以配置多个依赖bean,以逗号隔开
+	-->
+	<bean id="p-r" class="com.david.spring4.helloworld.beans.autowire.Person"
+	p:name="bean的依赖" p:address-ref="address3" depends-on="car-r"
+	></bean>
+
+</beans>

@@ -57,6 +57,9 @@ public class MainTest {
 			//构造器引用内部bean的方式引用
 			Person person5=ac.getBean("person5", Person.class);
 			System.out.println(person5);
+			//级联属性赋值
+			Person person6=ac.getBean("person6", Person.class);
+			System.out.println(person6);
 			
 	}
 

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
 	<!--配置bean-->
 	<!--在启动容器的时候，spring调用该类的无参构造器创建对象，并调用该对象的set方法初始化属性-->
 	<!--
@@ -68,6 +71,10 @@
 		<constructor-arg value="张三"></constructor-arg>
 		<constructor-arg value="20"></constructor-arg>
 		<constructor-arg ref="car2"></constructor-arg>
+		<!-- 
+			可以使用<null/>标签给属性赋值null,不过意义不大，引用类型默认就是null
+		 -->
+		<!-- <constructor-arg><null/></constructor-arg> -->
 	</bean>
 	<!--构造器引用内部bean的方式-->
 	<bean id="person5" class="com.david.spring4.helloworld.beans.Person">
@@ -82,6 +89,64 @@
 		</constructor-arg>
 	</bean>
 	
+	<!--级联属性赋值-->
+	<bean id="person6" class="com.david.spring4.helloworld.beans.Person">
+		<constructor-arg value="张三"></constructor-arg>
+		<constructor-arg value="20"></constructor-arg>
+		<constructor-arg ref="car2"></constructor-arg>
+		<!--注意此处：属性car必须先存在后，才能级联初始化该car的属性，否则会抛出异常，和struts2有区别！-->
+		<property name="car.maxSpeed" value="250"></property>
+	</bean>
+	<!--集合类型List类型属性赋值，set方式类似-->
+	<bean id="p1" class="com.david.spring4.helloworld.beans.collections.Person">
+		<property name="name" value="david"></property>
+		<property name="age" value="29"></property>
+		<property name="cars">
+			<list>
+				<ref bean="car1"/>
+				<ref bean="car2"/>
+				<ref bean="car3"/>
+			</list>
+		</property>
+	</bean>
+	<!--集合类型Map类型属性赋值-->
+	<bean id="p2" class="com.david.spring4.helloworld.beans.collections.PersonMap">
+		<property name="name" value="david"></property>
+		<property name="age" value="29"></property>
+		<property name="cars">
+			<map>
+				<entry key="1st" value-ref="car1"></entry>
+				<entry key="2nd" value-ref="car2"></entry>
+				<entry key="3rd" value-ref="car3"></entry>
+			</map>
+		</property>
+	</bean>
+	<!--使用props和prop节点给properties属性赋值（模拟数据库连接配置）-->
+	<bean id="d" class="com.david.spring4.helloworld.beans.collections.DataSource">
+		<property name="properties">
+			<props>
+				<prop key="user">root</prop>
+				<prop key="password">123456</prop>
+				<prop key="url">jdbc:mysql:///test</prop>
+				<prop key="driverClass">com.mysql.jdbc.Driver</prop>
+			</props>
+		</property>
+	</bean>
 	
+	<!--配置独立的一个集合bean，以便多个bean共同引用,配置文件需要导入util命名空间-->
+	<util:list id="carslist">
+		<ref bean="car1"/>
+		<ref bean="car2"/>
+		<ref bean="car3"/>
+	</util:list>
+	<bean id="p3" class="com.david.spring4.helloworld.beans.collections.Person">
+		<property name="name" value="david"></property>
+		<property name="age" value="29"></property>
+		<property name="cars" ref="carslist"></property>
+	</bean>
+	<!--通过p命名空间给bean属性赋值，需要导入p命名空间 -->
+	<bean id="p4" class="com.david.spring4.helloworld.beans.collections.Person" p:age="29"
+	p:name="DDDD" p:cars-ref="carslist"
+	></bean>
 	
 </beans>
