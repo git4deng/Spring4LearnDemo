@@ -9,7 +9,12 @@ import com.david.spring4.helloworld.beans.autowire.Address;
 import com.david.spring4.helloworld.beans.autowire.Person;
 
 
-
+/**
+ * @描述：
+ * @className:AutowireTest.java
+ * @作者： David
+ * @日期 下午4:26:55
+ */
 public class AutowireTest {
 
 	private ApplicationContext ac;
