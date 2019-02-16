@@ -1,7 +1,5 @@
 package com.david.spring4.helloworld.test;
 
-import static org.junit.Assert.fail;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

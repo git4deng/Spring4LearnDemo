@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="car" class="com.david.spring4.helloworld.beans.cycle.Car" init-method="init" destroy-method="destroy">
+		<property name="brand" value="BWM"></property>
+	</bean>
+	<!--配置bean的后置处理起-->
+	<!--实现BeanPostProcessor方法，并重写2个抽象方法：postProcessAfterInitialization和postProcessBeforeInitialization(Object bean, String beanName)
+		分别在bean的init方法之后和之前调用
+		参数bean：bean实例本身，beanName:bean实例的名字,返回值是实际bean,可以在这个2个方法中修改bean
+	-->
+	<!--配置bean的后置处理器：不需要配置id，IOC容器自动识别是一个BeanPostProcessor-->
+	<bean class="com.david.spring4.helloworld.beans.cycle.MyBeanPostProcessor"></bean>
+</beans>
