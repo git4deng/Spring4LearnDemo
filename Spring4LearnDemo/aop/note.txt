@@ -1,0 +1,42 @@
+1.SpringAOP
+1).加入jar包
+com.springsource.org.aopalliance-1.0.0.jar
+com.springsource.org.aspectj.weaver-1.6.8.RELEASE.jar
+commons-logging-1.1.3.jar
+spring-aop-4.0.0.RELEASE.jar
+spring-aspects-4.0.0.RELEASE.jar
+spring-beans-4.0.0.RELEASE.jar
+spring-context-4.0.0.RELEASE.jar
+spring-core-4.0.0.RELEASE.jar
+spring-expression-4.0.0.RELEASE.jar
+
+2).在配置文件中加入aop的命名空间
+3).基于注解的方式
+a.在配置文件中加入如下配置
+
+<!--是Aspect注解起重用：自动匹配的类生成代理对象-->
+<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+b.把横切关注点的代码抽象到切面类中。
+ i.首先切面试一个IOC容器中的bean,即加入@Component 注解
+ii.然后 切面还需加入@Aspect注解，申明这是一个切面类
+c.在类中申明各种通知
+	@Before: 前置通知, 在方法执行之前执行
+	@After: 后置通知, 在方法执行之后执行 
+	@AfterRunning: 返回通知, 在方法返回结果之后执行
+	@AfterThrowing: 异常通知, 在方法抛出异常之后
+	@Around: 环绕通知, 围绕着方法执行
+i.申明一个方法，在方法前加上@Before注解，并加上AspectJ表达式
+d.可以在通知方法中申明一个类型为JoinPoint的参数，然后就能访问到方法的细节，名称以及参数等。
+
+实例：
+@Aspect
+@Component 
+public class LoggingAspect {
+	@Before("execution(* com.david.spring.aop.impl.*.*(..))") //该包下的所有类的所有方法
+	public void beforeMethod(JoinPoint joinPoint){
+		String methodName = joinPoint.getSignature().getName();
+		List<Object> args = Arrays.asList(joinPoint.getArgs());
+		System.out.println("The method "+methodName+" begins whih "+args);
+	}
+}
