@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
 	<!--配置自动扫描的包-->
-	<context:component-scan base-package="com.david.spring.aop.impl"/>
+	<context:component-scan base-package="com.david.spring.aop.impl"></context:component-scan>
 	
 	<!--是Aspect注解起重用：自动匹配的类生成代理对象-->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>

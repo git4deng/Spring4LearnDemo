@@ -24,7 +24,7 @@ public class AopTest {
 	public void test() {
 		AtithmeticCalculator aci=ac.getBean(AtithmeticCalculator.class);
 		System.out.println(aci.add(1, 2));
-		System.out.println(aci.div(1, 0));
+		System.out.println(aci.div(1, 1));
 	}
 
 }

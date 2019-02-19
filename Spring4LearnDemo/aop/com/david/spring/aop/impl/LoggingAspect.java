@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,12 +23,18 @@ import org.springframework.stereotype.Component;
 @Aspect //申明该类为一个切面
 @Component 
 public class LoggingAspect {
+	/**
+	 * 定义一个方法，用于声明切入点表达式，一般地，改该方法中不需要再添加其它代码了，其它切面也能使用该方法申明的切点。
+	 */
+	@Pointcut("execution(* com.david.spring.aop.impl.*.*(..))")
+	public void declareJoinPointExpression(){}
 	//申明该方法是一个前置通知,在目标方法执行之前执行
 	//@Before("execution(public int com.david.spring.aop.impl.AtithmeticCalculator.add(int, int))") //作用指定的方法
 	//@Before("execution(public int com.david.spring.aop.impl.AtithmeticCalculator.*(int, int))") //作用所有的方法
 	//@Before("execution(* com.david.spring.aop.impl.*.*(int, int))") //该包下的所有参数为2个int的所有方法
 	//前置通知
-	@Before("execution(* com.david.spring.aop.impl.*.*(..))") //该包下的所有类的所有方法
+	//@Before("execution(* com.david.spring.aop.impl.*.*(..))") //该包下的所有类的所有方法
+	@Before("declareJoinPointExpression()")
 	public void beforeMethod(JoinPoint joinPoint){
 		String methodName = joinPoint.getSignature().getName();
 		List<Object> args = Arrays.asList(joinPoint.getArgs());
@@ -38,7 +45,8 @@ public class LoggingAspect {
 	 * 后置通知：在目标方法执行之后执行的通知(无论是否发生异常)
 	 * 注意：在后置通知中还不能访问目标方法执行的结果
 	 */
-	@After("execution(* com.david.spring.aop.impl.*.*(..))")
+	//@After("execution(* com.david.spring.aop.impl.*.*(..))")
+	@After("declareJoinPointExpression()")
 	public void afterMethod(JoinPoint joinPoint){
 		String methodName = joinPoint.getSignature().getName();
 		List<Object> args = Arrays.asList(joinPoint.getArgs());
@@ -48,7 +56,9 @@ public class LoggingAspect {
 	 * 返回通知
 	 * @param joinPoint
 	 */
-	@AfterReturning(value="execution(* com.david.spring.aop.impl.*.*(..))",
+	//@AfterReturning(value="execution(* com.david.spring.aop.impl.*.*(..))",
+	//		returning="result")
+	@AfterReturning(value="declareJoinPointExpression()",
 			returning="result")
 	public void AfterReturnning(JoinPoint joinPoint,Object result){
 		String methodName = joinPoint.getSignature().getName();
@@ -60,8 +70,10 @@ public class LoggingAspect {
 	 * @param joinPoint
 	 * @param ex
 	 */
-	@AfterThrowing(value="execution(* com.david.spring.aop.impl.*.*(..))",
-			throwing="ex")
+	//@AfterThrowing(value="execution(* com.david.spring.aop.impl.*.*(..))",
+	//		throwing="ex")
+	@AfterThrowing(value="declareJoinPointExpression()",
+	throwing="ex")
 	public void afterThrowing(JoinPoint joinPoint,Exception ex){
 		String methodName = joinPoint.getSignature().getName();
 		List<Object> args = Arrays.asList(joinPoint.getArgs());
@@ -72,7 +84,8 @@ public class LoggingAspect {
 	 * 可以决定是否执行目标方法，且环绕通知必须有返回值即为目标方法的返回值
 	 * @param joinPoint
 	 */
-	@Around(value = "execution(* com.david.spring.aop.impl.*.*(..))")
+	//@Around(value = "execution(* com.david.spring.aop.impl.*.*(..))")
+	//@Around(value ="declareJoinPointExpression()")
 	public Object AroundMethod(ProceedingJoinPoint pjp){
 		//return 1;
 		Object obj=null;
