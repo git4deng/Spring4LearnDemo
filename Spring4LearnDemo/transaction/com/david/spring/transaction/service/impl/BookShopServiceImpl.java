@@ -2,16 +2,19 @@ package com.david.spring.transaction.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.david.spring.transaction.dao.BookShopDao;
 import com.david.spring.transaction.service.BookShopService;
 
 /**
- * @描述：
+ * @描述：基于注解的事务管理
  * @className:BookShopServiceImpl.java
  * @作者： David
  * @日期 2019-02-22 21:56:44
  */
+//添加事务注解
+@Transactional
 @Service("bookShopService")
 public class BookShopServiceImpl implements BookShopService {
 	@Autowired
