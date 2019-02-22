@@ -1,6 +1,9 @@
-package com.david.spring.transaction.test;
+package com.david.spring.transaction.annotation.test;
 
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,8 +12,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import com.david.spring.transaction.dao.BookShopDao;
-import com.david.spring.transaction.service.BookShopService;
+import com.david.spring.transaction.annotation.dao.BookShopDao;
+import com.david.spring.transaction.annotation.service.BookShopService;
+import com.david.spring.transaction.annotation.service.Cashier;
+
 
 /**
  * @描述：
@@ -22,11 +27,13 @@ public class BookShopTest {
 	private ApplicationContext ac;
 	private BookShopDao bookShopDao;
 	private BookShopService bookShopService;
+	private Cashier cashier;
 	@Before
 	public void init() {
 		ac = new ClassPathXmlApplicationContext("application-tx.xml");
 		bookShopDao = ac.getBean("bookShopDao",BookShopDao.class);
 		bookShopService = ac.getBean("bookShopService",BookShopService.class);
+		cashier = ac.getBean("cashier",Cashier.class);
 	}
 	@Test
 	public void testFindBookPriceByIsbn() {
@@ -45,6 +52,16 @@ public class BookShopTest {
 	@Test
 	public void testBookShopService() {
 		bookShopService.purchase("AA", "1001");
+	}
+	/**
+	 * 测试事务的传播行为
+	 */
+	@Test
+	public void testCashier() {
+		List<String> isbns=new ArrayList<String>();
+		isbns.add("1001");
+		isbns.add("1002");
+		cashier.checkout("AA", isbns);
 	}
 
 }

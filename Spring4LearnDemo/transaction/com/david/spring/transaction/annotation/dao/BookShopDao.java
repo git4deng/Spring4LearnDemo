@@ -1,4 +1,4 @@
-package com.david.spring.transaction.dao;
+package com.david.spring.transaction.annotation.dao;
 
 /**
  * @ÃèÊö£º

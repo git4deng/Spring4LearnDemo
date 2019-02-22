@@ -1,4 +1,4 @@
-package com.david.spring.transaction.exception;
+package com.david.spring.transaction.annotation.exception;
 
 /**
  * @ÃèÊö£º
