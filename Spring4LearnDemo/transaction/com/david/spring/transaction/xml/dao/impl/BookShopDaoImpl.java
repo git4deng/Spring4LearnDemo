@@ -1,16 +1,10 @@
 package com.david.spring.transaction.xml.dao.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import com.david.spring.transaction.xml.dao.BookShopDao;
 import com.david.spring.transaction.xml.exception.BookShopException;
 import com.david.spring.transaction.xml.exception.UserAccountException;
-
-
-
-
 
 /**
  * @描述：
@@ -18,10 +12,13 @@ import com.david.spring.transaction.xml.exception.UserAccountException;
  * @作者： David
  * @日期 2019-02-22 21:23:12
  */
-@Repository("bookShopDao")
 public class BookShopDaoImpl implements BookShopDao {
-	@Autowired
+	
 	private JdbcTemplate template;
+	
+	public void setTemplate(JdbcTemplate template) {
+		this.template = template;
+	}
 	public int findBookPriceByIsbn(String isbn) {
 		String sql="select price from book where isbn=? ";
 		int n =template.queryForObject(sql, Integer.class,isbn);

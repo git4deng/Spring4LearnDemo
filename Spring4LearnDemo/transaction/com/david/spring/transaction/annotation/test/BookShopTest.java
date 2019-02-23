@@ -1,7 +1,5 @@
 package com.david.spring.transaction.annotation.test;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.david.spring.transaction.annotation.dao.BookShopDao;
 import com.david.spring.transaction.annotation.service.BookShopService;
@@ -30,7 +26,7 @@ public class BookShopTest {
 	private Cashier cashier;
 	@Before
 	public void init() {
-		ac = new ClassPathXmlApplicationContext("application-tx.xml");
+		ac = new ClassPathXmlApplicationContext("application-tx-annotation.xml");
 		bookShopDao = ac.getBean("bookShopDao",BookShopDao.class);
 		bookShopService = ac.getBean("bookShopService",BookShopService.class);
 		cashier = ac.getBean("cashier",Cashier.class);
