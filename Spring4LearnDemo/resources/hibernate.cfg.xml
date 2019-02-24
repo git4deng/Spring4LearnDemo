@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	<!--配置hibernate的基本属性-->
+    	<!--1.数据源需配置到IOC容器中，所以再此处不需要再配置数据源-->
+    	<!--2.关联的*.hbm.xml也在IOC容器配置sessionFactory实例时配置-->
+    	<!--3.hibernate 的基本属性可以在此配置文件中配置：例如方言，SQL显示以及格式化，生成数据表的策略以及二级缓存等-->
+    	
+    	<!-- 执行操作时是否在控制台打印 SQL -->
+		<property name="show_sql">true</property>
+		<!-- 是否对 SQL 进行格式化 -->
+		<property name="format_sql">false</property>
+    	
+    	<property name="hbm2ddl.auto">update</property>
+    	<!--注意此处：在mysql 5.0版本以后不支持 type=InnoDB 关键字，需要使用 engine=InnoDB,上面方言可能导致hibernate创建表失败！-->		
+		<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>	
+    </session-factory>
+
+
+
+</hibernate-configuration>
