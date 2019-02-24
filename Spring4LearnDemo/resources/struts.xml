@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!--这些常量默认配置的配置文件如下包里：-->
+	<!-- struts2-core-2.5.18.jar/org/apache/struts2/default.properties -->
+	<!--解决中文乱码问题-->
+	<!-- <constant name="struts.i18n.encoding" value="UTF-8"></constant> -->
+	<!--自定义扩展名设置-->
+	<!-- <constant name="struts.action.extension" value="action,david"></constant> -->
+	<!--设置开发模式，比较友好的输出提示信息，开发时使用-->
+	<!-- <constant name="struts.devMode" value="true"></constant> -->
+	
+	<!--设置配置文件修改后自动加载-，提高开发效率，推荐没开发是使用-->
+	<!-- <constant name="struts.configuration.xml.reload" value="true"></constant> -->
+	<!--引入其它模块的配置文件-->
+	<include file="struts*.xml"></include>
+	
+</struts>
